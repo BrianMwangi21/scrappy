@@ -22,10 +22,17 @@ def text_query(text_to_query, count, since_date, until_date, location):
     for tweet in tweets_data:
         date = tweet.date.strftime('%Y-%m-%d')
         time = tweet.date.strftime('%H:%M')
-        tweets.append([date, time, tweet.username, tweet.text, tweet.permalink])
+        tweets.append([tweet.id,
+                       tweet.permalink,
+                       tweet.username,
+                       tweet.text,
+                       date, time,
+                       tweet.retweets,
+                       tweet.favorites,
+                       tweet.hashtags])
 
     # Creation of dataframe from tweets
-    tweets_df = pd.DataFrame(tweets, columns=['Date', 'Time', 'Username', 'Tweet', 'Permalink'])
+    tweets_df = pd.DataFrame(tweets, columns=['ID', 'Permalink', 'Username', 'Tweet', 'Date', 'Time', 'Retweets', 'Favorites', 'Hashtags'])
 
     # Converting tweets dataframe to csv file
     tweets_df.to_csv('{}-tweets.csv'.format(text_to_query), sep=',')
